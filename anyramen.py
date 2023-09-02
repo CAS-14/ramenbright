@@ -16,6 +16,11 @@ def run():
             tkmb.showerror(title="No files!", message="Directory .anyramen detected, but no images in it! Please fix this!")
 
         else:
-            ramenbright.VERSION += "a1"
-            ramenbright.RAMEN_FILE = random.choice(ramen_files)
+            ramen_file = os.path.join(RAMEN_DIR, random.choice(ramen_files))
+
+            ramenbright.VERSION += "an"
+            ramenbright.RAMEN_FILE = ramen_file
             ramenbright.main()
+
+if __name__ == "__main__":
+    run()
