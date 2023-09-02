@@ -8,7 +8,7 @@ import os
 MONITOR_INDEX = 0
 MIN_BRIGHTNESS_SCALE = 1
 
-VERSION = "1.0"
+VERSION = "1.0.1"
 
 RAMEN_FILE = os.path.join(os.path.dirname(__file__), "ramen.jpg")
 
@@ -44,20 +44,19 @@ class App(tk.Tk):
         self.label_brightness.config(text=f"Brightness: {int(new_brightness * 100)}%")
 
 def main():
-    brightness = float(subprocess.getoutput("xrandr --verbose | grep rightness").strip().split(": ")[1])
-    if brightness is None:
-        brightness = 1.0
-
-    monitors = subprocess.getoutput("xrandr --listmonitors").splitlines()[1:]
-    monitor_name = monitors[MONITOR_INDEX].strip().split()[-1]
-    
-    app = App(monitor_name, brightness)
-    app.mainloop()
-
-if __name__ == "__main__":
     if shutil.which("xrandr") and subprocess.getoutput("xrandr"):
-        main()
+        brightness = float(subprocess.getoutput("xrandr --verbose | grep rightness").strip().split(": ")[1])
+        if brightness is None:
+            brightness = 1.0
 
+        monitors = subprocess.getoutput("xrandr --listmonitors").splitlines()[1:]
+        monitor_name = monitors[MONITOR_INDEX].strip().split()[-1]
+        
+        app = App(monitor_name, brightness)
+        app.mainloop()
+    
     else:
         print("You must have xrandr installed (sudo apt install x11-server-utils) to use this program.")
-    
+
+if __name__ == "__main__":
+    main()
